@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: local
+    group:
+      local:
+        - common
+      prod:
+        - common
+---
+spring:
+  profiles:
+    activate:
+      on-profile: local
+
+---
+spring:
+  profiles:
+    activate:
+      on-profile: common
+
+---
+spring:
+  profiles:
+    activate:
+      on-profile: prod
