@@ -1,7 +1,7 @@
 package com.project.snsservice.chat.controller;
 
 import com.project.snsservice.chat.domain.ChatRoom;
-import com.project.snsservice.chat.repository.ChatRoomRepository;
+import com.project.snsservice.chat.repository.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
-    private final ChatRoomRepository chatRoomRepository;
+    private final ChatRoomService chatRoomService;
 
     @GetMapping("/room")
     public String rooms(Model model) {
@@ -24,13 +24,13 @@ public class ChatRoomController {
     @GetMapping("/rooms")
     @ResponseBody
     public List<ChatRoom> room() {
-        return chatRoomRepository.findAllRoom();
+        return chatRoomService.findAllRoom();
     }
 
     @PostMapping("/room")
     @ResponseBody
     public ChatRoom createRoom(@RequestParam String name) {
-        return chatRoomRepository.createChatRoom(name);
+        return chatRoomService.createChatRoom(name);
     }
 
     @GetMapping("/room/enter/{roomId}")
@@ -42,6 +42,6 @@ public class ChatRoomController {
     @GetMapping("/room/{roomId}")
     @ResponseBody
     public ChatRoom roomInfo(@PathVariable String roomId) {
-        return chatRoomRepository.findRoomById(roomId);
+        return chatRoomService.findRoomById(roomId);
     }
 }

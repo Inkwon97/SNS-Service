@@ -1,4 +1,4 @@
-package com.project.snsservice.chat.config;
+package com.project.snsservice.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
