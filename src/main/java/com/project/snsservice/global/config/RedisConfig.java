@@ -55,6 +55,4 @@ public class RedisConfig {
     public ChannelTopic channelTopic() {
         return new ChannelTopic("chatroom");
     }
-
-
 }

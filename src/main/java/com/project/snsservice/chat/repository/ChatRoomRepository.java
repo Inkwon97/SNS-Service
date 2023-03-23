@@ -44,8 +44,9 @@ public class ChatRoomRepository {
      * 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
      */
     public ChatRoom createChatRoom(String name) {
-        ChatRoom chatRoom = ChatRoom.create(name);
-        opsHashChatRoom.put(CHAT_ROOMS, String.valueOf(opsHashChatRoom.keys(CHAT_ROOMS).size() + 1), chatRoom);
+        String roomId = String.valueOf(opsHashChatRoom.keys(CHAT_ROOMS).size() + 1);
+        ChatRoom chatRoom = ChatRoom.create(name, roomId); // TODO: Map은 순서없이 저장되므로 이후에 ID를 자동생성해서 roomId에 넣어주기
+        opsHashChatRoom.put(CHAT_ROOMS, roomId, chatRoom);
         return chatRoom;
     }
 
