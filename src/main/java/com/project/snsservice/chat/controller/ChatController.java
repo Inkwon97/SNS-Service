@@ -1,25 +1,21 @@
 package com.project.snsservice.chat.controller;
 
-import com.project.snsservice.chat.domain.ChatRoom;
-import com.project.snsservice.chat.service.ChatService;
+import com.project.snsservice.chat.domain.ChatMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.stereotype.Controller;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/chat")
+@Controller
 public class ChatController {
-    private final ChatService chatService;
 
-    @PostMapping
-    public ChatRoom createRoom(@RequestParam String name) {
-        return chatService.createRoom(name);
-    }
+    private final SimpMessageSendingOperations messagingTemplate;
 
-    @GetMapping
-    public List<ChatRoom> findAllRoom() {
-        return chatService.findAllRoom();
+    @MessageMapping("/chat/message")
+    public void message(ChatMessage message) {
+        if (ChatMessage.MessageType.ENTER.equals(message.getType()))
+            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 }
