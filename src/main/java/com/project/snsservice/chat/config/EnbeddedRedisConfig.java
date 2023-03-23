@@ -8,4 +8,8 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class EnbeddedRedisConfig {
 
+    @Value("${spring.redis.port}")
+    private int redisPort;
+
+
 }
