@@ -10,4 +10,9 @@ public class ViewTestController {
     public String test() {
         return "test.html";
     }
+
+    @GetMapping("/test/chat")
+    public String testChat() {
+        return "chat/chat.html";
+    }
 }
