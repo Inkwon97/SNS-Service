@@ -8,13 +8,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
 @RequiredArgsConstructor
-@Repository
-public class ChatRoomRepository {
+@Service
+public class ChatRoomService {
     // 채팅방(topic)에 발행되는 메시지를 처리할 Listner
     private final RedisMessageListenerContainer redisMessageListener;
     // 구독 처리 서비스
@@ -44,7 +45,7 @@ public class ChatRoomRepository {
      * 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
      */
     public ChatRoom createChatRoom(String name) {
-        String roomId = String.valueOf(opsHashChatRoom.keys(CHAT_ROOMS).size() + 1);
+        String roomId = String.valueOf(opsHashChatRoom.keys(CHAT_ROOMS).size() + 1); // TODO: key명령어를 사용하지 않는 방향으로 고치기
         ChatRoom chatRoom = ChatRoom.create(name, roomId); // TODO: Map은 순서없이 저장되므로 이후에 ID를 자동생성해서 roomId에 넣어주기
         opsHashChatRoom.put(CHAT_ROOMS, roomId, chatRoom);
         return chatRoom;
