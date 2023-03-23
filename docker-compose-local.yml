@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  sns-service-redis:
+    container_name: sns-service-redis
+    build:
+      dockerfile: Dockerfile
+      context: ./redis
+    image: ghkdrnjs180/sns-service-redis
+    ports:
+      - "6379:6379"
+
+  sns-service-database:
+    container_name: sns-service-database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: ghkdrnjs180/sns-service-database
+    environment:
+      - MARIADB_DATABASE=sns-service
+      - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
