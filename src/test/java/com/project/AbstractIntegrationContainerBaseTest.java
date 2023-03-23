@@ -1,13 +1,11 @@
-package com.project.snsservice;
+package com.project;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.domain.Specification;
 import org.testcontainers.containers.GenericContainer;
 
 @SpringBootTest
-class SnsServiceApplicationTests {
-
+public class AbstractIntegrationContainerBaseTest {
     static final GenericContainer MY_REDIS_CONTAINER;
 
     static {
@@ -20,5 +18,4 @@ class SnsServiceApplicationTests {
         System.setProperty("spring.redis.port", MY_REDIS_CONTAINER.getMappedPort(6379).toString());
 
     }
-
 }

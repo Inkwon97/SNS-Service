@@ -45,7 +45,13 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.17.2'
+    // https://mvnrepository.com/artifact/it.ozimov/embedded-redis
+//    testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+    //embedded-redis
+    implementation 'it.ozimov:embedded-redis:0.7.2'
 
 }
 
