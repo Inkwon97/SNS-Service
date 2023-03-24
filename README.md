@@ -37,12 +37,17 @@ REDIS:6 -->
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/>
 <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white"/>
 
+## 기술적 구현 **
+1. db의 select 쿼리를 줄이기 위해 캐시 서버인 Redis에서 값을 조회한 뒤 데이터가 없다면 Repository를 조회하도록 하였습니다.
+추가예정
+
 ## 🧑‍💻 기술적 의사 결정
 | 기술명           | 이유                                                                                                                                                                                                                                                 |
 |:--------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Spring Boot   | 자바의 웹 프레임워크로, 특정 Library의 버전 자동 설정 기능을 이용하여 쉽고 빠른 웹 개발을 위하여 선택                                                                                                                                                                                     |
-| Docker        | 채팅 데이터를 빠르게 읽고 쓰기 위한 caching용 DB로 선택                                                                                                                                                                                                               |
-| Stomp,Sock.Js | 기존의 Websocket위에서 작동하는 프로토콜로, 클라이언트와 서버의 통신에 사용할 메시징 형식이 정의되어 있고, 그에 맞춰서 데이터 송수신에 편리함이 있어 선택 <br> Spring STOMP의 내장된 Message Broker와 Publish/Subscribe 기능을 통해, 데이터를 원하는 클라이언트로 전달하는데 편리함이 있어 선택 <br> 유저의 브라우저가 Websocket 지원하지 않을 경우를 대비하여 Sock.js 선택 |
-| MARIADB       | 추가예정                                                                                                                                                                                                                                               |
-| Redis         | 채팅 데이터를 빠르게 읽고 쓰기 위한 caching용 DB로 선택                                                                                                                                                                                                               |
-| Kafka         | 추가예정                                                                                                                                                                                                                                               |
+|Github flow    | 개인으로 프로젝트를 진행하기에 Gitflow보다는 단순한 Github flow를 사용. preProduction으로 기능별 브랜치를 설정하고, Production을 통해서 pull/request를 사용 |
+| Docker        | Redis, MariaDB같은 독립적인 컨테이너들의 다중 컨테이너 라이프 사이클을 효율적으로 관리하기 위해 사용|
+| Stomp,Sock.Js | websocket의 경우 단순한 통신 구조로 인해 메세지가 어떠한 요청인지 구분하기 힘들다는 단점 <br> 따라서 메시지 전송을 효율적으로 처리하기 위해 Stomp의 pub/sub를 이용하였고, <br>Redis가 제공하는 pub/sub를 활용하여 다른 서버에 접속해 있는 클라이언트가 다른 서버의 클라이언트와 메세지를 주고받도록 구현 |
+| MARIADB       | Mysql과의 호환성이 뛰어나고, 더욱 강력한 기능을 제공합니다. 또한, RDS의 가격 측면에서 훨씬 저렴해 사용|
+| Redis         | 채팅 데이터를 빠르게 읽고 쓰기 위한 caching용 DB로 선택|
+| Kafka         | 추가예정|
