@@ -52,6 +52,16 @@ public class RedisConfig {
     }
 
     @Bean
+    public RedisTemplate<String, String> redisChatTemplate(
+            RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(String.class));
+        return redisTemplate;
+    }
+
+    @Bean
     public ChannelTopic channelTopic() {
         return new ChannelTopic("chatroom");
     }

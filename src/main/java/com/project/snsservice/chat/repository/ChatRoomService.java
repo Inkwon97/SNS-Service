@@ -9,6 +9,8 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import redis.embedded.Redis;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -22,14 +24,22 @@ public class ChatRoomService {
     private final RedisSubscriber redisSubscriber;
     // Redis
     private static final String CHAT_ROOMS = "CHAT_ROOM";
+    private static final String CHAT = "CHAT";
     private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, String> redisChatTemplate;
     private HashOperations<String, String, ChatRoom> opsHashChatRoom;
+    private HashOperations<String, String, String> opsHashChat;
+
     // 채팅방의 대화 메시지를 발행하기 위한 redis topic 정보. 서버별로 채팅방에 매치되는 topic정보를 Map에 넣어 roomId로 찾을수 있도록 한다.
     private Map<String, ChannelTopic> topics;
+
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatRepository chatRepository;
 
     @PostConstruct
     private void init() {
         opsHashChatRoom = redisTemplate.opsForHash();
+        opsHashChat = redisChatTemplate.opsForHash();
         topics = new HashMap<>();
     }
 
@@ -45,9 +55,9 @@ public class ChatRoomService {
      * 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
      */
     public ChatRoom createChatRoom(String name) {
-        String roomId = String.valueOf(opsHashChatRoom.keys(CHAT_ROOMS).size() + 1); // TODO: key명령어를 사용하지 않는 방향으로 고치기
-        ChatRoom chatRoom = ChatRoom.create(name, roomId); // TODO: Map은 순서없이 저장되므로 이후에 ID를 자동생성해서 roomId에 넣어주기
-        opsHashChatRoom.put(CHAT_ROOMS, roomId, chatRoom);
+        ChatRoom chatRoom = ChatRoom.create(name); // TODO: Map은 순서없이 저장되므로 이후에 ID를 자동생성해서 roomId에 넣어주기
+        ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
+        opsHashChatRoom.put(CHAT_ROOMS, String.valueOf(savedChatRoom.getRoomId()), chatRoom);
         return chatRoom;
     }
 
@@ -60,6 +70,10 @@ public class ChatRoomService {
             topic = new ChannelTopic(roomId);
         redisMessageListener.addMessageListener(redisSubscriber, topic);
         topics.put(roomId, topic);
+    }
+
+    public void saveChat(ChannelTopic topic, String message) {
+        opsHashChat.put(CHAT, topic.getTopic(), message);
     }
 
     public ChannelTopic getTopic(String roomId) {
