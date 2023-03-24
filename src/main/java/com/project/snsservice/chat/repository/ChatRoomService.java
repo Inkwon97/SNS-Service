@@ -4,6 +4,8 @@ import com.project.snsservice.chat.domain.Chat;
 import com.project.snsservice.chat.domain.ChatMessage;
 import com.project.snsservice.chat.domain.ChatRoom;
 import com.project.snsservice.chat.service.RedisSubscriber;
+import com.project.snsservice.global.exception.CustomException;
+import com.project.snsservice.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -42,9 +44,17 @@ public class ChatRoomService {
         return redisTemplate.opsForHash().values(CHAT_ROOMS);
     }
 
-    public ChatRoom findRoomById(String id) {
-        return (ChatRoom) redisTemplate.opsForHash().get(CHAT_ROOMS, id);
+    /**
+    * redis에 채팅방이 있는지 확인 후, 없다면 Repository에서 데이터를 가져오도록 하였음
+    */
+    public ChatRoom findRoomById(Long roomId) {
+        ChatRoom chatRoom = (ChatRoom) redisTemplate.opsForHash().get(CHAT_ROOMS, String.valueOf(roomId));
+        if (chatRoom == null) {
+            return chatRoomRepository.findById(roomId).orElseThrow(() -> new CustomException(ErrorCode.CHATROOM_NOT_FOUND));
+        }
+        return (ChatRoom) chatRoom;
     }
+
 
     /**
      * 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.

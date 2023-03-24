@@ -41,7 +41,7 @@ public class ChatRoomController {
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
+    public ChatRoom roomInfo(@PathVariable Long roomId) {
         return chatRoomService.findRoomById(roomId);
     }
 }
