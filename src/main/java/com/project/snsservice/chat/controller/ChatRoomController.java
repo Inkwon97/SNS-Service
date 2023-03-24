@@ -23,7 +23,7 @@ public class ChatRoomController {
 
     @GetMapping("/rooms")
     @ResponseBody
-    public List<ChatRoom> room() {
+    public List<Object> room() {
         return chatRoomService.findAllRoom();
     }
 
@@ -41,7 +41,7 @@ public class ChatRoomController {
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
+    public ChatRoom roomInfo(@PathVariable Long roomId) {
         return chatRoomService.findRoomById(roomId);
     }
 }
