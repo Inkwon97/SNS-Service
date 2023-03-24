@@ -3,18 +3,16 @@ package com.project.snsservice.chat.repository;
 import com.project.snsservice.chat.domain.ChatRoom;
 import com.project.snsservice.chat.service.RedisSubscriber;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.HashOperations;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import redis.embedded.Redis;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ChatRoomService {
@@ -27,8 +25,6 @@ public class ChatRoomService {
     private static final String CHAT = "CHAT";
     private final RedisTemplate<String, Object> redisTemplate;
     private final RedisTemplate<String, String> redisChatTemplate;
-    private HashOperations<String, String, ChatRoom> opsHashChatRoom;
-    private HashOperations<String, String, String> opsHashChat;
 
     // 채팅방의 대화 메시지를 발행하기 위한 redis topic 정보. 서버별로 채팅방에 매치되는 topic정보를 Map에 넣어 roomId로 찾을수 있도록 한다.
     private Map<String, ChannelTopic> topics;
@@ -38,17 +34,15 @@ public class ChatRoomService {
 
     @PostConstruct
     private void init() {
-        opsHashChatRoom = redisTemplate.opsForHash();
-        opsHashChat = redisChatTemplate.opsForHash();
         topics = new HashMap<>();
     }
 
-    public List<ChatRoom> findAllRoom() {
-        return opsHashChatRoom.values(CHAT_ROOMS);
+    public List<Object> findAllRoom() {
+        return redisTemplate.opsForHash().values(CHAT_ROOMS);
     }
 
     public ChatRoom findRoomById(String id) {
-        return opsHashChatRoom.get(CHAT_ROOMS, id);
+        return (ChatRoom) redisTemplate.opsForHash().get(CHAT_ROOMS, id);
     }
 
     /**
@@ -57,7 +51,8 @@ public class ChatRoomService {
     public ChatRoom createChatRoom(String name) {
         ChatRoom chatRoom = ChatRoom.create(name); // TODO: Map은 순서없이 저장되므로 이후에 ID를 자동생성해서 roomId에 넣어주기
         ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
-        opsHashChatRoom.put(CHAT_ROOMS, String.valueOf(savedChatRoom.getRoomId()), chatRoom);
+        redisTemplate.opsForHash().put(CHAT_ROOMS, savedChatRoom.getRoomId(), chatRoom);
+        log.info("createChatRoom id : {} name : {}", savedChatRoom.getRoomId(), chatRoom.getName());
         return chatRoom;
     }
 
@@ -73,7 +68,9 @@ public class ChatRoomService {
     }
 
     public void saveChat(ChannelTopic topic, String message) {
-        opsHashChat.put(CHAT, topic.getTopic(), message);
+        // TODO: KEY값과 subkey가 모두 동일하면 안된다. message의 ID별로 넣어줄 것
+        log.info("CHAT : {} TOPIC : {} MESSAGE : {}", CHAT, topic.getTopic(), message);
+        redisChatTemplate.opsForHash().put(CHAT, topic.getTopic(), message);
     }
 
     public ChannelTopic getTopic(String roomId) {

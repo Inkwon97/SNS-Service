@@ -23,7 +23,7 @@ public class ChatRoomController {
 
     @GetMapping("/rooms")
     @ResponseBody
-    public List<ChatRoom> room() {
+    public List<Object> room() {
         return chatRoomService.findAllRoom();
     }
 
