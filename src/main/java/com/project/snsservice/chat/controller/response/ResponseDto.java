@@ -20,4 +20,7 @@ public class ResponseDto<T> {
     public static <T> ResponseDto<T> error(String resultCode) {
         return new ResponseDto<>(resultCode, null);
     }
+    public static <T> ResponseDto<T> error(String resultCode, T message) {
+        return new ResponseDto<>(resultCode, message);
+    }
 }

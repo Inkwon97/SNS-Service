@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionAdvice {
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<?> errorHandler(CustomException e) {
-        log.error("Error occurs {}", e.toString());
-        return ResponseEntity.status(e.getErrorCode().getHttpStatus())
-                .body(ResponseDto.error(e.getErrorCode().name()));
+    public ResponseDto<?> errorHandler(CustomException e) {
+        log.error("Error occurs ErrorType : {}, ErrorCode : {}", e.toString(), e.getErrorCode());
+        return ResponseDto.error(e.getErrorCode().name(), e.getMessage());
     }
 }
