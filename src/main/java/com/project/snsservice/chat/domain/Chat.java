@@ -6,16 +6,17 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
+//@Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Chat {
+public class Chat implements Serializable {
 
-    @Id
+/*    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;*/
 
     private String sender;
 
@@ -26,9 +27,12 @@ public class Chat {
     @Column(updatable = false)
     private LocalDateTime sendDate;
 
-    public Chat(ChatRoom chatRoom, String sender, String message) {
-        new Chat(chatRoom, sender, message);
+    public static Chat of(ChatMessage chatMessage) {
+        return new Chat(chatMessage.getSender(), chatMessage.getMessage());
     }
 
-
+    public Chat(String sender, String message) {
+        this.sender = sender;
+        this.message = message;
+    }
 }

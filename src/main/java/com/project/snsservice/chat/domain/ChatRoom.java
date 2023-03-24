@@ -12,9 +12,7 @@ import java.util.UUID;
 @Getter
 @Entity
 @NoArgsConstructor
-public class ChatRoom implements Serializable {
-
-    private static final long serialVersionUID = 5090380600159441769L;
+public class ChatRoom implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

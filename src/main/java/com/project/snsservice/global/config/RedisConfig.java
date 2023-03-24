@@ -1,5 +1,8 @@
 package com.project.snsservice.global.config;
 
+import com.project.snsservice.chat.domain.Chat;
+import com.project.snsservice.chat.domain.ChatMessage;
+import com.project.snsservice.chat.domain.ChatRoom;
 import com.project.snsservice.chat.service.RedisPublisher;
 import com.project.snsservice.chat.service.RedisSubscriber;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,22 +45,34 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate
-            (RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, ChatRoom> redisTemplate(
+            RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, ChatRoom> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(String.class));
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<ChatRoom>(ChatRoom.class));
         return redisTemplate;
     }
 
     @Bean
-    public RedisTemplate<String, String> redisChatTemplate(
+    public RedisTemplate<String, Chat> redisChatTemplate(
             RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+        RedisTemplate<String, Chat> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(String.class));
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<Chat>(Chat.class));
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, ChatMessage> redisChatMessageTemplate(
+            RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, ChatMessage> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<ChatMessage>(ChatMessage.class));
         return redisTemplate;
     }
 
