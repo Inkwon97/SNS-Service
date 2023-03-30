@@ -55,6 +55,7 @@ dependencies {
 //    testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     //embedded-redis
     implementation 'it.ozimov:embedded-redis:0.7.2'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 }
 
