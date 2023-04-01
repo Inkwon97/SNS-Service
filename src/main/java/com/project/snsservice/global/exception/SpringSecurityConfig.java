@@ -3,10 +3,12 @@ package com.project.snsservice.global.exception;
 import com.project.snsservice.security.domain.User;
 import com.project.snsservice.security.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,17 +23,18 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        http.httpBasic().disable();
         http.csrf().disable();
 
         http.authorizeRequests()
                 .antMatchers("/post").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers(
                         "/chat/**",
                         "/ws-stomp/**",
                         "/pub/**",
-                        "/sub/**",
-                        "/chat/**"
+                        "/sub/**"
                 ).permitAll()
                 .anyRequest().authenticated();
 
@@ -39,6 +42,18 @@ public class SpringSecurityConfig {
 
         return http.build();
     }
+
+    /*@Bean
+    public WebSecurityCustomizer securityCustomizer() {
+        return (web) -> web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers(
+                        "/chat/**",
+                        "/ws-stomp/**",
+                        "/pub/**",
+                        "/sub/**"
+                );
+    }*/
 
     @Bean
     public UserDetailsService userDetailsService() {
