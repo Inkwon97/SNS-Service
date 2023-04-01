@@ -2,6 +2,4 @@
 <thlogic>
     <attr sel="#header" th:replace="/view/header :: header"/>
     <attr sel="#footer" th:replace="/view/footer :: footer"/>
-
-
 </thlogic>

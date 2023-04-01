@@ -1,4 +1,4 @@
-package com.project.snsservice.global.exception;
+package com.project.snsservice.security.config;
 
 import com.project.snsservice.security.domain.User;
 import com.project.snsservice.security.service.UserService;
@@ -21,6 +21,9 @@ public class SpringSecurityConfig {
 
     private final UserService userService;
 
+
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -30,42 +33,26 @@ public class SpringSecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/post").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers(
                         "/chat/**",
                         "/ws-stomp/**",
                         "/pub/**",
-                        "/sub/**"
+                        "/sub/**",
+                        "/signup"
                 ).permitAll()
                 .anyRequest().authenticated();
 
-        http.formLogin();
+        http.formLogin()
+                .defaultSuccessUrl("/")
+                .permitAll();
 
         return http.build();
     }
 
-    /*@Bean
-    public WebSecurityCustomizer securityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                .antMatchers(
-                        "/chat/**",
-                        "/ws-stomp/**",
-                        "/pub/**",
-                        "/sub/**"
-                );
-    }*/
-
     @Bean
     public WebSecurityCustomizer securityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                .antMatchers(
-                        "/chat/**",
-                        "/ws-stomp/**",
-                        "/pub/**",
-                        "/sub/**"
-                );
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean

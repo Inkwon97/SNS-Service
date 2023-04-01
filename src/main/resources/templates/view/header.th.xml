@@ -1,6 +1,31 @@
 <?xml version="1.0"?>
-<thlogic>
-    <attr sel="#search" th:action="@{/notice}" method="get"/>
-    <attr sel="nav/a[4]" th:href="@{/login}"/>
-    <attr sel="nav/a[5]" th:href="@{/logout}"/>
-</thlogic>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <thlogic>
+        <attr sel="nav/a[0]"
+              th:href="@{/}" method="get"
+              sec:authorize="isAuthenticated()"
+        />
+        <attr sel="nav/a[1]"
+              th:href="@{/notice}" method="get"
+              sec:authorize="isAuthenticated()"
+        />
+        <attr sel="nav/a[2]"
+              th:href="@{/chat/room}" method="get"
+              sec:authorize="isAuthenticated()"
+        />
+        <attr sel="nav/a[3]"
+              th:href="@{/user}" method="get"
+              sec:authorize="isAuthenticated()"
+        />
+        <attr sel="nav/a[4]"
+              th:href="@{/login}"
+              sec:authorize="isAnonymous()"
+        />
+        <attr sel="nav/a[5]"
+              th:href="@{/logout}"
+              sec:authorize="isAuthenticated()"
+        />
+        <attr sel="#search" th:action="@{/notice}" method="get"/>
+    </thlogic>
+</html>

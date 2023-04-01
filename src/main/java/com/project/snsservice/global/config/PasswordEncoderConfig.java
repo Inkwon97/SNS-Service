@@ -1,4 +1,4 @@
-package com.project.snsservice.global.exception;
+package com.project.snsservice.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
