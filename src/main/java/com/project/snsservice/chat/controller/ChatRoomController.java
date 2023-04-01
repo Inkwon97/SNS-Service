@@ -25,9 +25,7 @@ public class ChatRoomController {
 
     @GetMapping("/rooms")
     @ResponseBody
-    public List<ChatRoom> room(
-            Authentication authentication
-    ) {
+    public List<Object> room() {
         return chatRoomService.findAllRoom();
     }
 
@@ -48,9 +46,7 @@ public class ChatRoomController {
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(
-            Authentication authentication,
-            @PathVariable String roomId) {
+    public ChatRoom roomInfo(@PathVariable Long roomId) {
         return chatRoomService.findRoomById(roomId);
     }
 }
