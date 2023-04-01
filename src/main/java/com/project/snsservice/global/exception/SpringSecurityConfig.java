@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 
@@ -54,6 +55,18 @@ public class SpringSecurityConfig {
                         "/sub/**"
                 );
     }*/
+
+    @Bean
+    public WebSecurityCustomizer securityCustomizer() {
+        return (web) -> web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers(
+                        "/chat/**",
+                        "/ws-stomp/**",
+                        "/pub/**",
+                        "/sub/**"
+                );
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
