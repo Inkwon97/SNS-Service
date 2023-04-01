@@ -3,6 +3,8 @@ package com.project.snsservice.chat.controller;
 import com.project.snsservice.chat.domain.ChatRoom;
 import com.project.snsservice.chat.repository.ChatRoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +19,15 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping("/room")
-    public String rooms(Model model) {
-        return "/chat/room.html";
+    public String rooms(Authentication authentication, Model model) {
+        return "/chat/room";
     }
 
     @GetMapping("/rooms")
     @ResponseBody
-    public List<ChatRoom> room() {
+    public List<ChatRoom> room(
+            Authentication authentication
+    ) {
         return chatRoomService.findAllRoom();
     }
 
@@ -34,14 +38,19 @@ public class ChatRoomController {
     }
 
     @GetMapping("/room/enter/{roomId}")
-    public String roomDetail(Model model, @PathVariable String roomId) {
+    public String roomDetail(
+            Authentication authentication,
+            Model model,
+            @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
-        return "/chat/roomdetail.html";
+        return "/chat/roomdetail";
     }
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
+    public ChatRoom roomInfo(
+            Authentication authentication,
+            @PathVariable String roomId) {
         return chatRoomService.findRoomById(roomId);
     }
 }
