@@ -3,7 +3,8 @@ redis를 이용한 채팅서비스, kafka를 이용한 알림, SNS (진행중)
 
 ## 사용할 기술<br>
 Docker, Spring boot<br>
-(사용 예정)Redis, Kafka
+(사용 예정)Redis, Kafka<br>
+WebSocket
 
 ## Configuration
 SPRING 버전 : 2.7.0<br>
