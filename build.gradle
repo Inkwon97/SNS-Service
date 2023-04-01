@@ -53,6 +53,13 @@ dependencies {
     //embedded-redis
     implementation 'it.ozimov:embedded-redis:0.7.2'
 
+    // 이 강의의 주제인 Security 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+
 }
 
 tasks.named('test') {
