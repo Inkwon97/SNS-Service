@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="#search" th:action="@{/notice}" method="get"/>
+    <attr sel="nav/a[4]" th:href="@{/login}"/>
+    <attr sel="nav/a[5]" th:href="@{/logout}"/>
+</thlogic>

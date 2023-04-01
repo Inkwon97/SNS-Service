@@ -32,6 +32,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.data:spring-data-rest-hal-explorer'
+
     // web socket
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-freemarker'
@@ -52,6 +55,7 @@ dependencies {
 //    testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     //embedded-redis
     implementation 'it.ozimov:embedded-redis:0.7.2'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // 이 강의의 주제인 Security 추가
     implementation 'org.springframework.boot:spring-boot-starter-security'
