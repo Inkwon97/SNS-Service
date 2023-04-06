@@ -1,28 +1,18 @@
 package com.project.snsservice.security.config;
 
-import com.project.snsservice.security.domain.User;
-import com.project.snsservice.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
-
-    private final UserService userService;
-
-
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,13 +28,10 @@ public class SpringSecurityConfig {
                         "/ws-stomp/**",
                         "/pub/**",
                         "/sub/**",
-                        "/signup"
+                        "/user/signup",
+                        "/h2-console/**"
                 ).permitAll()
                 .anyRequest().authenticated();
-
-        http.formLogin()
-                .defaultSuccessUrl("/")
-                .permitAll();
 
         return http.build();
     }
@@ -55,10 +42,4 @@ public class SpringSecurityConfig {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> {
-            return userService.findByUsername(username);
-        };
-    }
 }
