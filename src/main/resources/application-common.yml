@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    activate:
+      on-profile: common
+
+  thymeleaf3.decoupled-logic: true
+
+  redis:
+    host: localhost
+    port: 6379
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+    freemarker:
+      cache: false
