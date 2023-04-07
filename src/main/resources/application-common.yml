@@ -22,3 +22,8 @@ spring:
       enabled: false
     freemarker:
       cache: false
+
+jwt:
+  token:
+    secret-key: ${JWT_SECRET_TOKEN}
+    expire-length: 30 * 60 * 1000 # 30분

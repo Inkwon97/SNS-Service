@@ -3,6 +3,7 @@ package com.project.snsservice.doamin;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -36,6 +37,17 @@ public class Member {
 
     public static Member of(String nickname, String username, String password, String profileImg) {
         return new Member(nickname, username, password, profileImg);
+    }
+
+    // https://reflectoring.io/spring-security-password-handling/
+    /**
+     * 비밀번호를 암호화
+     * @param passwordEncoder 암호화 할 인코더 클래스
+     * @return 변경된 유저 Entity
+     */
+    public Member hashPassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+        return this;
     }
 
     @Override

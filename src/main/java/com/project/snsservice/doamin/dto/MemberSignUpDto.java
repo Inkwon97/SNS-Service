@@ -1,4 +1,4 @@
-package com.project.snsservice.doamin.response;
+package com.project.snsservice.doamin.dto;
 
 import com.project.snsservice.doamin.Member;
 import com.sun.istack.NotNull;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class MemberDto {
+public class MemberSignUpDto {
 
     @NotNull
     private String username;
@@ -17,21 +17,21 @@ public class MemberDto {
     private String password;
     private String profileImg;
 
-    private MemberDto(String nickname, String username, String profileImg) {
+    private MemberSignUpDto(String nickname, String username, String profileImg) {
         this.nickname = nickname;
         this.username = username;
         this.profileImg = profileImg;
     }
 
-    public static MemberDto of(String nickname, String username, String profileImg) {
-        return new MemberDto(nickname, username, profileImg);
+    public static MemberSignUpDto of(String nickname, String username, String profileImg) {
+        return new MemberSignUpDto(nickname, username, profileImg);
     }
 
-    public static MemberDto from(Member member) {
-        return new MemberDto(member.getNickname(), member.getUsername(), member.getProfileImg());
+    public static MemberSignUpDto fromEntity(Member member) {
+        return new MemberSignUpDto(member.getNickname(), member.getUsername(), member.getProfileImg());
     }
 
-    public Member to() {
+    public Member toEntity() {
         return Member.of(nickname, username, password, profileImg);
     }
 }
