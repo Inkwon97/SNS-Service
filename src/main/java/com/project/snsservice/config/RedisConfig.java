@@ -1,4 +1,4 @@
-package com.project.snsservice.global.config;
+package com.project.snsservice.config;
 
 import com.project.snsservice.doamin.Chat;
 import com.project.snsservice.doamin.ChatMessage;
