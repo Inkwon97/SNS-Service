@@ -1,4 +1,4 @@
-package com.project.snsservice.doamin.response;
+package com.project.snsservice.doamin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

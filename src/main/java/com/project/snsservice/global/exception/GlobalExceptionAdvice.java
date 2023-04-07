@@ -1,6 +1,6 @@
 package com.project.snsservice.global.exception;
 
-import com.project.snsservice.doamin.response.ResponseDto;
+import com.project.snsservice.doamin.dto.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

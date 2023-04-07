@@ -1,6 +1,6 @@
 package com.project.snsservice.service;
 
-import com.project.snsservice.doamin.response.ResponseDto;
+import com.project.snsservice.doamin.dto.ResponseDto;
 import com.project.snsservice.doamin.Member;
 import com.project.snsservice.doamin.dto.MemberLoginDto;
 import com.project.snsservice.doamin.dto.MemberSignUpDto;
@@ -34,7 +34,7 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
 
-    public ResponseDto<MemberSignUpDto> signUpUser(MemberSignUpDto memberSignUpDto) {
+    public ResponseDto<MemberSignUpDto> signUpMember(MemberSignUpDto memberSignUpDto) {
         log.info("{}", memberSignUpDto.getUsername());
 
         if (memberRepository.findByUsername(memberSignUpDto.getUsername()).isPresent()) {
@@ -46,10 +46,10 @@ public class MemberService {
         Member member = memberSignUpDto.toEntity();
         member = member.hashPassword(bCryptPasswordEncoder);
         Member savedMember = memberRepository.save(member);
-        return ResponseDto.success(MemberSignUpDto.fromEntity(savedMember));
+        return ResponseDto.success(MemberSignUpDto.responseDto(savedMember));
     }
 
-    public ResponseEntity<TokenDto> signIn(MemberLoginDto memberLoginDto) {
+    public ResponseEntity<TokenDto> signInMember(MemberLoginDto memberLoginDto) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -69,8 +69,14 @@ public class MemberService {
         }
     }
 
-    public ResponseDto<MemberSignUpDto> getProfile(String username) {
-        MemberSignUpDto fromEntity = MemberSignUpDto.fromEntity(memberRepository.findByUsername(username).get());
+    // UserName으로 멤버를 반환
+    @Transactional(readOnly = true)
+    public ResponseDto<MemberSignUpDto> getMember(String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION)
+        );
+
+        MemberSignUpDto fromEntity = MemberSignUpDto.fromEntity(member);
         return ResponseDto.success(fromEntity);
     }
 }

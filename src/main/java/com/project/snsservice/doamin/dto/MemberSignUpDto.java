@@ -17,21 +17,34 @@ public class MemberSignUpDto {
     private String password;
     private String profileImg;
 
-    private MemberSignUpDto(String nickname, String username, String profileImg) {
-        this.nickname = nickname;
+    public MemberSignUpDto(String username, String nickname, String password, String profileImg) {
         this.username = username;
+        this.nickname = nickname;
+        this.password = password;
         this.profileImg = profileImg;
     }
 
-    public static MemberSignUpDto of(String nickname, String username, String profileImg) {
-        return new MemberSignUpDto(nickname, username, profileImg);
+    public static MemberSignUpDto of(String nickname, String username, String password, String profileImg) {
+        return new MemberSignUpDto(nickname, username, password, profileImg);
     }
 
     public static MemberSignUpDto fromEntity(Member member) {
-        return new MemberSignUpDto(member.getNickname(), member.getUsername(), member.getProfileImg());
+        return new MemberSignUpDto(
+                member.getNickname(),
+                member.getUsername(),
+                member.getPassword(),
+                member.getProfileImg());
     }
 
     public Member toEntity() {
         return Member.of(nickname, username, password, profileImg);
+    }
+
+    public static MemberSignUpDto responseDto(Member member) {
+        return new MemberSignUpDto(
+                member.getUsername(),
+                member.getNickname(),
+                null,
+                member.getProfileImg());
     }
 }

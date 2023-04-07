@@ -1,6 +1,7 @@
 package com.project.snsservice.doamin.dto;
 
 
+import com.project.snsservice.doamin.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +19,6 @@ public class MemberLoginDto {
     public static MemberLoginDto of(String username, String password) {
         return new MemberLoginDto(username, password);
     }
+
 
 }

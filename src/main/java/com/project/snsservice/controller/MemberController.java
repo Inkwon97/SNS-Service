@@ -1,6 +1,6 @@
 package com.project.snsservice.controller;
 
-import com.project.snsservice.doamin.response.ResponseDto;
+import com.project.snsservice.doamin.dto.ResponseDto;
 import com.project.snsservice.doamin.dto.MemberLoginDto;
 import com.project.snsservice.doamin.dto.MemberSignUpDto;
 import com.project.snsservice.global.exception.CustomException;
@@ -30,12 +30,12 @@ public class MemberController {
     @PostMapping("/signUp")
     public ResponseDto<MemberSignUpDto> signUpUser(@Valid @RequestBody MemberSignUpDto memberSignUpDto) {
         log.info("nickname : {}, username : {}", memberSignUpDto.getNickname(), memberSignUpDto.getUsername());
-        return memberService.signUpUser(memberSignUpDto);
+        return memberService.signUpMember(memberSignUpDto);
     }
 
     @PostMapping("/signIn")
     public ResponseDto<?> signIn(@Valid @RequestBody MemberLoginDto memberLoginDto, HttpServletResponse res) {
-        ResponseEntity<TokenDto> tokenDtoResponseEntity = memberService.signIn(memberLoginDto);
+        ResponseEntity<TokenDto> tokenDtoResponseEntity = memberService.signInMember(memberLoginDto);
         Cookie cookie = new Cookie(
                 "access_token",
                 tokenDtoResponseEntity.getBody().getAccess_token()
@@ -54,6 +54,6 @@ public class MemberController {
         if (userDetails == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION);
         }
-        return memberService.getProfile(userDetails.getUsername());
+        return memberService.getMember(userDetails.getUsername());
     }
 }
