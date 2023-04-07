@@ -1,6 +1,6 @@
-package com.project.snsservice.chat.repository;
+package com.project.snsservice.repository;
 
-import com.project.snsservice.chat.domain.ChatRoom;
+import com.project.snsservice.doamin.ChatRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

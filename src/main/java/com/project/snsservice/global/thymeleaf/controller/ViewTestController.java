@@ -1,4 +1,4 @@
-package com.project.snsservice.thymeleaf.controller;
+package com.project.snsservice.global.thymeleaf.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,11 +1,11 @@
-package com.project.snsservice.chat.repository;
+package com.project.snsservice.service;
 
-import com.project.snsservice.chat.domain.Chat;
-import com.project.snsservice.chat.domain.ChatMessage;
-import com.project.snsservice.chat.domain.ChatRoom;
-import com.project.snsservice.chat.service.RedisSubscriber;
+import com.project.snsservice.doamin.Chat;
+import com.project.snsservice.doamin.ChatMessage;
+import com.project.snsservice.doamin.ChatRoom;
 import com.project.snsservice.global.exception.CustomException;
 import com.project.snsservice.global.exception.ErrorCode;
+import com.project.snsservice.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

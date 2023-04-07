@@ -1,4 +1,4 @@
-package com.project.snsservice.chat.domain;
+package com.project.snsservice.doamin;
 
 import lombok.Getter;
 import lombok.Setter;

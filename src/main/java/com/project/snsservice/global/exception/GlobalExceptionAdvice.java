@@ -1,8 +1,7 @@
 package com.project.snsservice.global.exception;
 
-import com.project.snsservice.chat.controller.response.ResponseDto;
+import com.project.snsservice.doamin.response.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

@@ -1,7 +1,7 @@
-package com.project.snsservice.chat.service;
+package com.project.snsservice.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.snsservice.chat.domain.ChatMessage;
+import com.project.snsservice.doamin.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;

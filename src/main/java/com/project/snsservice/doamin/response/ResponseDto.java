@@ -1,4 +1,4 @@
-package com.project.snsservice.chat.controller.response;
+package com.project.snsservice.doamin.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

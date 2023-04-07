@@ -1,17 +1,14 @@
 package com.project.snsservice.global.config;
 
-import com.project.snsservice.chat.domain.Chat;
-import com.project.snsservice.chat.domain.ChatMessage;
-import com.project.snsservice.chat.domain.ChatRoom;
-import com.project.snsservice.chat.service.RedisPublisher;
-import com.project.snsservice.chat.service.RedisSubscriber;
+import com.project.snsservice.doamin.Chat;
+import com.project.snsservice.doamin.ChatMessage;
+import com.project.snsservice.doamin.ChatRoom;
+import com.project.snsservice.service.RedisSubscriber;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;

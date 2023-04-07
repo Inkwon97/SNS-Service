@@ -1,11 +1,9 @@
-package com.project.snsservice.chat.service;
+package com.project.snsservice.service;
 
-import com.project.snsservice.chat.domain.ChatMessage;
-import com.project.snsservice.chat.domain.ChatRoom;
-import com.project.snsservice.chat.repository.ChatRoomService;
+import com.project.snsservice.doamin.ChatMessage;
+import com.project.snsservice.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;

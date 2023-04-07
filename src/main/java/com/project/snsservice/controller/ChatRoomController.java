@@ -1,10 +1,9 @@
-package com.project.snsservice.chat.controller;
+package com.project.snsservice.controller;
 
-import com.project.snsservice.chat.domain.ChatRoom;
-import com.project.snsservice.chat.repository.ChatRoomService;
+import com.project.snsservice.doamin.ChatRoom;
+import com.project.snsservice.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

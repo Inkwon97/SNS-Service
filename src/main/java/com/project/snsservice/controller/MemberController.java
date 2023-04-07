@@ -1,6 +1,6 @@
 package com.project.snsservice.controller;
 
-import com.project.snsservice.chat.controller.response.ResponseDto;
+import com.project.snsservice.doamin.response.ResponseDto;
 import com.project.snsservice.doamin.dto.MemberLoginDto;
 import com.project.snsservice.doamin.dto.MemberSignUpDto;
 import com.project.snsservice.global.exception.CustomException;

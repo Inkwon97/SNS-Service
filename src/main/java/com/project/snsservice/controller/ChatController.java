@@ -1,8 +1,8 @@
-package com.project.snsservice.chat.controller;
+package com.project.snsservice.controller;
 
-import com.project.snsservice.chat.domain.ChatMessage;
-import com.project.snsservice.chat.repository.ChatRoomService;
-import com.project.snsservice.chat.service.RedisPublisher;
+import com.project.snsservice.doamin.ChatMessage;
+import com.project.snsservice.service.ChatRoomService;
+import com.project.snsservice.service.RedisPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;

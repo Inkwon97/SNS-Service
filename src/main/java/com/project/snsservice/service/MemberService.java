@@ -1,6 +1,6 @@
 package com.project.snsservice.service;
 
-import com.project.snsservice.chat.controller.response.ResponseDto;
+import com.project.snsservice.doamin.response.ResponseDto;
 import com.project.snsservice.doamin.Member;
 import com.project.snsservice.doamin.dto.MemberLoginDto;
 import com.project.snsservice.doamin.dto.MemberSignUpDto;
