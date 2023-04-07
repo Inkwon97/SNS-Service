@@ -19,8 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.*;
 
 @DisplayName("비즈니스 로직 - 회원")
 @ExtendWith(MockitoExtension.class)
@@ -93,6 +93,24 @@ class MemberServiceTest {
                 .hasFieldOrPropertyWithValue("nickname", member.getNickname());
 
         then(memberRepository).should().save(member);
+    }
+
+    @Test
+    public void tdd_테스트() throws Exception {
+        Member member = createMember("ingwon", "ingwon123");
+        Member member1 = createMember("ingwon1234", "ingwon1234");
+        //given
+        given(memberRepository.save(any(Member.class))).willReturn(member);
+
+        //when
+        MemberSignUpDto result = sut.signUpMember(MemberSignUpDto.fromEntity(member)).getResult();
+        MemberSignUpDto result1 = sut.signUpMember(MemberSignUpDto.fromEntity(member1)).getResult();
+
+        System.out.println(result.getUsername() + result.getNickname());
+        System.out.println(result1.getUsername() + result1.getNickname());
+
+        //then
+        then(memberRepository.save(any(Member.class)));
     }
 
     private Member createMember(String username, String nickname) {

@@ -4,6 +4,9 @@ import com.project.snsservice.doamin.Member;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
+
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -24,20 +27,20 @@ public class MemberSignUpDto {
         this.profileImg = profileImg;
     }
 
-    public static MemberSignUpDto of(String nickname, String username, String password, String profileImg) {
-        return new MemberSignUpDto(nickname, username, password, profileImg);
+    public static MemberSignUpDto of(String username, String nickname, String password, String profileImg) {
+        return new MemberSignUpDto(username, nickname, password, profileImg);
     }
 
     public static MemberSignUpDto fromEntity(Member member) {
         return new MemberSignUpDto(
-                member.getNickname(),
                 member.getUsername(),
+                member.getNickname(),
                 member.getPassword(),
                 member.getProfileImg());
     }
 
     public Member toEntity() {
-        return Member.of(nickname, username, password, profileImg);
+        return Member.of(getUsername(), getNickname(), getPassword(), getProfileImg());
     }
 
     public static MemberSignUpDto responseDto(Member member) {

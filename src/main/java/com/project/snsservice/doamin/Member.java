@@ -11,35 +11,35 @@ import java.util.Objects;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends AuditingFields{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
     private String nickname;
 
-    @Column(nullable = false)
-    private String username;
 
     @Column(nullable = false)
     private String password;
 
     private String profileImg;
 
-    private Member(String nickname, String username, String password, String profileImg) {
-        this.nickname = nickname;
+
+    private Member(String username, String nickname, String password, String profileImg) {
         this.username = username;
+        this.nickname = nickname;
         this.password = password;
         this.profileImg = profileImg;
     }
 
-    public static Member of(String nickname, String username, String password, String profileImg) {
-        return new Member(nickname, username, password, profileImg);
+    public static Member of(String username, String nickname, String password, String profileImg) {
+        return new Member(username, nickname, password, profileImg);
     }
 
-    // https://reflectoring.io/spring-security-password-handling/
     /**
      * 비밀번호를 암호화
      * @param passwordEncoder 암호화 할 인코더 클래스
