@@ -1,4 +1,4 @@
-package com.project.snsservice.global.config;
+package com.project.snsservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
