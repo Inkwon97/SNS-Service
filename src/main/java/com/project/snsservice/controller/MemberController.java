@@ -9,6 +9,7 @@ import com.project.snsservice.security.dto.TokenDto;
 import com.project.snsservice.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,4 +57,5 @@ public class MemberController {
         }
         return memberService.getMember(userDetails.getUsername());
     }
+
 }

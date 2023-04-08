@@ -76,7 +76,8 @@ public class MemberService {
                 () -> new CustomException(ErrorCode.USER_NOT_FOUND_EXCEPTION)
         );
 
-        MemberSignUpDto fromEntity = MemberSignUpDto.fromEntity(member);
-        return ResponseDto.success(fromEntity);
+        MemberSignUpDto responseDto = MemberSignUpDto.responseDto(member);
+        return ResponseDto.success(responseDto);
     }
+
 }

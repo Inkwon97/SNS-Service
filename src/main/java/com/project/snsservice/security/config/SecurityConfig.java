@@ -50,7 +50,8 @@ public class SecurityConfig {
                         "/sub/**",
                         "/user/signUp",
                         "/user/signIn",
-                        "/h2-console/**"
+                        "/h2-console/**",
+                        "/documents"
                 ).permitAll()
                 .anyRequest().authenticated();
 
