@@ -41,16 +41,18 @@ public class Document extends AuditingFields{
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private Set<DocumentComment> documentComments = new LinkedHashSet<>();
 
+    @Setter private String hashtag; // 해시태그
 
-    private Document(Member member, String title, String content) {
 
+    private Document(Member member, String title, String content, String hashtag) {
         this.member = member;
         this.title = title;
         this.content = content;
+        this.hashtag = hashtag;
     }
 
-    public static Document of(Member member, String title, String content) {
-        return new Document(member, title, content);
+    public static Document of(Member member, String title, String content, String hashtag) {
+        return new Document(member, title, content, hashtag);
     }
 
     @Override

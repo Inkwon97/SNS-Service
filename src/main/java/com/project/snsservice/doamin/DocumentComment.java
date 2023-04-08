@@ -26,7 +26,8 @@ public class DocumentComment extends AuditingFields{
     @ManyToOne(optional = false) @JoinColumn(name = "member_id")
     private Member member; // 유저 정보
 
-    @ManyToOne(optional = false) @JoinColumn(name = "document_id") @Column(nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "document_id")
     private Document document; // 게시글 ID
 
     private Long parentCommentId;
