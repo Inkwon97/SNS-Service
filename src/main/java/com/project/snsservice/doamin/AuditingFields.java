@@ -24,8 +24,10 @@ public abstract class AuditingFields {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // createdBy 혹은 ModifiedBy에 인증되지 않은 사용자가 접근하면 invocation error가 발생함 -> 따라서 null로 설정해주었음
+    // ex) signUp을 호출할 때
     @CreatedBy
-    @Column(nullable = false, updatable = false, length = 100)
+    @Column(updatable = false, length = 100)
     private String createdBy;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -34,7 +36,7 @@ public abstract class AuditingFields {
     private LocalDateTime modifiedAt;
 
     @LastModifiedBy
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String modifiedBy;
 
 }
